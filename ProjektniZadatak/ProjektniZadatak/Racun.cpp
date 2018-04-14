@@ -152,6 +152,57 @@ bool Racun::isRacunValidan(double ukupno, double PDVvrijednost, double ukupnoZaP
 	return true;
 }
 
+bool Racun::operator==(const Racun& other) const
+{
+	if (proizvodi.size() != other.proizvodi.size()) // da li se na racunu nalazi isti broj proizvoda
+		return false;
+	else
+	{
+		int c = 0;
+		for (int i = 0; i < proizvodi.size(); ++i)
+			if (proizvodi[i] == other.proizvodi[i]) // provjerimo da li su svi proizvodi na racunima jednaki
+				++c;
+		if (datumKupovine == other.datumKupovine && imeKupca == other.imeKupca && ukupno == other.ukupno && PDVvrijednost == other.PDVvrijednost && ukupnoZaPlacanje == other.ukupnoZaPlacanje && c == proizvodi.size())
+			return true;
+		else
+			return false;
+	}
+}
+
+bool Racun::Proizvod::operator==(const Proizvod& other) const
+{
+	return (this->naziv == other.naziv && sifra == other.sifra && cijena == other.cijena && kolicina == other.kolicina && ukupno == other.ukupno) ? true : false;
+}
+
+bool Racun::Datum::operator==(const Datum& other) const
+{
+	return (dan == other.dan && mjesec == other.mjesec && godina == other.godina) ? true : false;
+}
+
+void Racun::upisiRacun(std::vector<Racun> validniRacuni)
+{
+	std::ofstream file("ValidniRacuni.txt");
+	if (file.is_open())
+	{
+		file << "Ukupan broj validnih racuna: " << validniRacuni.size() << std::endl;
+		file << std::endl;
+		for (auto& racun : validniRacuni)
+		{
+			file << "Kupac: " << racun.imeKupca << std::endl;
+			file << "Datum kupovine: " << racun.datumKupovine.dan << "/" << racun.datumKupovine.mjesec << "/" << racun.datumKupovine.godina << std::endl;
+			for (auto& x : racun.proizvodi)
+				file << "Naziv proizvoda: " << x.naziv << std::endl << "Sifra proizvoda: " << x.sifra << std::endl << "Kolicina proizvoda: " << x.kolicina << std::endl << "Cijena proizvoda: " << x.cijena << std::endl << "Ukupna cijena proizvoda: " << x.ukupno << std::endl;
+			file << "Ukupno: " << racun.ukupno << " " << racun.valuta << std::endl;
+			file << "PDV: " << racun.PDVvrijednost << " " << racun.valuta << std::endl;
+			file << "Ukupno za placanje: " << racun.ukupnoZaPlacanje << " " << racun.valuta << std::endl;
+			file << std::endl;
+		}
+		file.close();
+	}
+	else
+		std::cout << "Fajl nije otvoren!" << std::endl;
+}
+
 
 Racun::~Racun()
 {}

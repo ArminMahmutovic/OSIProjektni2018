@@ -21,11 +21,13 @@ private:
 		double kolicina;
 		double ukupno;
 		Proizvod(std::string naziv, std::string sifra, double cijena, double kolicina, double ukupno) : naziv(naziv), sifra(sifra), cijena(cijena), kolicina(kolicina), ukupno(ukupno) {}
+		bool operator==(const Proizvod&)const; // provjeravamo da li su 2 proizvoda jednaka
 	};
 	std::vector<Proizvod> proizvodi;
 	struct Datum
 	{
 		int dan, mjesec, godina;
+		bool operator==(const Datum&)const; // provjeravamo da li su 2 datuma jednaka
 	};
 	Datum datumKupovine;
 	double ukupno; // ukupna cijena svih proizvoda bez PDV-a
@@ -43,6 +45,8 @@ public:
 	void setImeKupca(std::string imeKupca);
 	bool setDatumKupovine(std::string datum);
 	bool setProizvod(std::string, std::string, double, double, double); // naziv proizvoda, kolicina, cijena, ukupno
-	bool setUkupno(double, double, double); // ukupno, PDV vrijednost, ukupno za placanje 
+	bool setUkupno(double, double, double); // ukupno, PDV vrijednost, ukupno za placanje
+	bool operator==(const Racun&)const; // provjeravamo da li su 2 racuna jednaka
+	void upisiRacun(std::vector<Racun>); // upis validnih racuna u fajl, funkcija kao argument prihvata niz validnih racuna
 	~Racun();
 };
