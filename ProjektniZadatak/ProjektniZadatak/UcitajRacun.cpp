@@ -179,5 +179,17 @@ void UcitajRacun::ucitajIzFajla()
 }
 
 
+void UcitajRacun::pregledPodatakaZaProizvod(std::string nazivProizvoda)
+{
+	int brojac = 0; // sluzi za provjeru da li je pronadjen zeljeni proizvod
+	std::cout << std::endl << "Naziv proizvoda: " << nazivProizvoda << std::endl;
+	for (auto& racun : validniRacuni) // prolazimo kroz niz racuna
+		if (ispisiPodatkeZaProizvod(racun, nazivProizvoda))
+			brojac++;
+	if (brojac == 0)
+		std::cout << std::endl << "Nema podataka za ovaj proizvod" << std::endl << std::endl;
+}
+
+
 UcitajRacun::~UcitajRacun()
 {}

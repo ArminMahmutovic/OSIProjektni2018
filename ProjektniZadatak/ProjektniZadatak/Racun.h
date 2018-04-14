@@ -48,5 +48,6 @@ public:
 	bool setUkupno(double, double, double); // ukupno, PDV vrijednost, ukupno za placanje
 	bool operator==(const Racun&)const; // provjeravamo da li su 2 racuna jednaka
 	void upisiRacun(std::vector<Racun>); // upis validnih racuna u fajl, funkcija kao argument prihvata niz validnih racuna
+	int ispisiPodatkeZaProizvod(Racun&, std::string); // funkcija prihvata racun na kom se nalazi zeljeni proizvod i naziv proizvoda
 	~Racun();
 };

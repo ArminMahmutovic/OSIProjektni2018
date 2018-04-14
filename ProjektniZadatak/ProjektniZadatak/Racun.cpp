@@ -204,5 +204,23 @@ void Racun::upisiRacun(std::vector<Racun> validniRacuni)
 }
 
 
+int Racun::ispisiPodatkeZaProizvod(Racun& racun, std::string nazivProizvoda)
+{
+	int brojac = 0; // sluzi za provjeru da li na racunu postoji proizvod koji trazimo
+	for (auto& x : racun.proizvodi) // prolazimo kroz niz proizvoda
+	{
+		if (x.naziv == nazivProizvoda) // ako su nazivi proizvoda isti ispisujemo proizvod
+		{
+			brojac++;
+			std::cout << "Datum kupovine: " << racun.datumKupovine.dan << "/" << racun.datumKupovine.mjesec << "/" << racun.datumKupovine.godina << std::endl;
+			std::cout << "          Kolicina: " << x.kolicina << std::endl;
+			std::cout << "          Cijena: " << x.cijena << " " << valuta << std::endl;
+			std::cout << "          Ukupno: " << x.ukupno << std::endl << std::endl;
+		}
+	}
+	return brojac;
+}
+
+
 Racun::~Racun()
 {}
