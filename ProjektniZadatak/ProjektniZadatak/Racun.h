@@ -33,8 +33,16 @@ private:
 	std::ifstream& currency; // fajl u kom se nalazi valuta sistema
 	std::string valuta;
 	double PDVvrijednost;
+	bool isRacunValidan(double, double, double)const;
+	void upisiGresku(std::string); // upisuje greske pronadjene na racunu u fajl
+	bool isLeap(int);
+	bool isDateValid(int, int, int);
 public:
 	Racun() = default;
 	Racun(std::ifstream&); // konstruktor prihvata fajl u kom se nalazi valuta sistema
+	void setImeKupca(std::string imeKupca);
+	bool setDatumKupovine(std::string datum);
+	bool setProizvod(std::string, std::string, double, double, double); // naziv proizvoda, kolicina, cijena, ukupno
+	bool setUkupno(double, double, double); // ukupno, PDV vrijednost, ukupno za placanje 
 	~Racun();
 };
