@@ -18,9 +18,15 @@
     <ClInclude Include="Racun.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UcitajRacun.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Racun.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UcitajRacun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

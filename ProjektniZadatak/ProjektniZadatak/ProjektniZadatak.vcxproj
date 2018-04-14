@@ -116,9 +116,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Racun.h" />
+    <ClInclude Include="UcitajRacun.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Racun.cpp" />
+    <ClCompile Include="UcitajRacun.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
