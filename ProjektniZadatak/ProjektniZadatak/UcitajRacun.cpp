@@ -99,6 +99,9 @@ void UcitajRacun::format2(std::ifstream& file, std::string nazivRacuna)
 		racuni.erase(racuni.begin() + 1);
 		racuni.erase(racuni.end() - 5);
 		racun.setImeKupca(racuni[0]);
+		provjera = racun.setDatumKupovine(racuni[racuni.size() - 1]);
+		if (provjera == false)
+			return;
 		for (int i = 1; i < racuni.size() - 4; i += 5)
 		{
 			provjera = racun.setProizvod(racuni[i], racuni[i + 1], stod(racuni[i + 2]), stod(racuni[i + 3]), stod(racuni[i + 4]));
@@ -106,9 +109,6 @@ void UcitajRacun::format2(std::ifstream& file, std::string nazivRacuna)
 				return;
 		}
 		provjera = racun.setUkupno(stod(racuni[racuni.size() - 4]), stod(racuni[racuni.size() - 3]), stod(racuni[racuni.size() - 2]));
-		if (provjera == false)
-			return;
-		provjera = racun.setDatumKupovine(racuni[racuni.size() - 1]);
 		if (provjera == false)
 			return;
 		if (validniRacuni.size() > 0)
@@ -157,6 +157,8 @@ void UcitajRacun::ucitajIzFajla()
 				racuni.push_back(pomocna);
 		}
 		file.close();
+		if (racuni.size() == 1)
+			return;
 		int j = 2;
 		for (int i = 0; i < stoi(racuni[0]); i++)
 		{
@@ -199,24 +201,6 @@ void UcitajRacun::pregledUkupneProdajeZaOdredjeniMjesec(int mjesec, int godina)
 	std::cout << std::endl;
 	pregledUkupneProdajeZaMjesec(mjesec, godina, validniRacuni);
 	std::cout << std::endl;
-}
-
-void UcitajRacun::pregledPodatakaZaKupca(std::string imeKupca)
-{
-	int brojac = 0;
-	std::cout << std::endl << "Ime kupca: " << imeKupca << std::endl;
-	std::cout << std::endl;
-	for (auto& racun : validniRacuni)
-	{
-		if (racun.getImeKupca() == imeKupca)
-		{
-			ispisiRacunZaKupca(racun);
-			brojac++;
-		}
-	}
-	std::cout << std::endl;
-	if (brojac == 0)
-		std::cout << std::endl << "Nema podataka za ovog kupca!" << std::endl;
 }
 
 UcitajRacun::~UcitajRacun()
