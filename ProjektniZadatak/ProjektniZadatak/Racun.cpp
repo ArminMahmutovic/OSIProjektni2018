@@ -9,7 +9,7 @@ Racun::Racun(std::ifstream& currency) : currency(currency)
 	if (currency.is_open())
 		currency >> valuta;
 	else
-		std::cout << std::endl << "Fajl sa valutom nije otvorena!" << std::endl;
+		std::cout << std::endl << "Fajl sa valutom nije otvoren!" << std::endl;
 }
 
 void Racun::setImeKupca(std::string imeKupca)
@@ -19,10 +19,21 @@ void Racun::setImeKupca(std::string imeKupca)
 
 void Racun::upisiGresku(std::string poruka)
 {
-	std::fstream errorFile("Error.txt", std::ios::app);
+	std::cout << this->nazivRacuna << std::endl;
+	std::ofstream errorFile(this->nazivRacuna);
 	if (errorFile.is_open())
 	{
-		errorFile << poruka << std::endl;
+		if (poruka.find("Datum") == 0) // ako je u poruci pronadjena rijec Datum na poziciji 0
+		{
+			errorFile << "Kupac: " << this->imeKupca << std::endl;
+			errorFile << poruka << std::endl << std::endl;
+		}
+		else
+		{
+			errorFile << "Kupac: " << this->imeKupca << std::endl;
+			errorFile << "Datum kupovine: " << this->datumKupovine.dan << "/" << this->datumKupovine.mjesec << "/" << this->datumKupovine.godina << std::endl;
+			errorFile << poruka << std::endl << std::endl;
+		}
 		errorFile.close();
 	}
 	else
@@ -95,7 +106,8 @@ bool Racun::setDatumKupovine(std::string datum)
 	}
 	else
 	{
-		upisiGresku("Datum nije validan!");
+		std::string poruka = "Datum " + datum + " nije validan!";
+		upisiGresku(poruka);
 		return false;
 	}
 }
@@ -114,7 +126,8 @@ bool Racun::setProizvod(std::string nazivProizvoda, std::string sifraProizvoda, 
 	}
 	else if (ukupno != (cijenaProizvoda*kolicinaProizvoda))
 	{
-		upisiGresku("Ukupno cijena za proizvod nije tacna!");
+		std::string poruka = "Ukupna cijena za proizvod " + nazivProizvoda + " nije tacna!";
+		upisiGresku(poruka);
 		return false;
 	}
 	else
@@ -135,7 +148,7 @@ bool Racun::setUkupno(double ukupno, double PDVvrijednost, double ukupnoZaPlacan
 	}
 	else
 	{
-		upisiGresku("Ukupna cijena za placanje nije tacna!");
+		upisiGresku("Ukupna cijena za placanje na racunu nije tacna!");
 		return false;
 	}
 }
@@ -221,6 +234,11 @@ int Racun::ispisiPodatkeZaProizvod(Racun& racun, std::string nazivProizvoda)
 	return brojac;
 }
 
+void Racun::setNazivRacuna(std::string nazivRacuna)
+{
+	nazivRacuna.erase(nazivRacuna.end() - 4, nazivRacuna.end()); // obrisemo .txt iz naziva racuna
+	this->nazivRacuna = nazivRacuna + "_error.txt";
+}
 
 Racun::~Racun()
 {}

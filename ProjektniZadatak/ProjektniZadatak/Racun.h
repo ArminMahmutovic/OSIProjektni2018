@@ -35,6 +35,7 @@ private:
 	std::ifstream& currency; // fajl u kom se nalazi valuta sistema
 	std::string valuta;
 	double PDVvrijednost;
+	std::string nazivRacuna;
 	bool isRacunValidan(double, double, double)const;
 	void upisiGresku(std::string); // upisuje greske pronadjene na racunu u fajl
 	bool isLeap(int);
@@ -46,6 +47,7 @@ public:
 	bool setDatumKupovine(std::string datum);
 	bool setProizvod(std::string, std::string, double, double, double); // naziv proizvoda, kolicina, cijena, ukupno
 	bool setUkupno(double, double, double); // ukupno, PDV vrijednost, ukupno za placanje
+	void setNazivRacuna(std::string);
 	bool operator==(const Racun&)const; // provjeravamo da li su 2 racuna jednaka
 	void upisiRacun(std::vector<Racun>); // upis validnih racuna u fajl, funkcija kao argument prihvata niz validnih racuna
 	int ispisiPodatkeZaProizvod(Racun&, std::string); // funkcija prihvata racun na kom se nalazi zeljeni proizvod i naziv proizvoda

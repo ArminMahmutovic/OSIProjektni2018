@@ -8,16 +8,16 @@ UcitajRacun::UcitajRacun(std::ifstream& currency) : Racun(currency), currency(cu
 	 ucitajIzFajla(); // pri konstrukciji objekta klase UcitajRacun odmah se ucitavaju validni racuni koji su ranije obradjeni
 }
 
-void UcitajRacun::ucitajRacun(std::ifstream& file)
+void UcitajRacun::ucitajRacun(std::ifstream& file, std::string nazivRacuna)
 {
 	if (file.is_open())
 	{
 		std::string provjera;
 		file >> provjera;
 		if (provjeraFormata(provjera) == 1)
-			format1(file);
+			format1(file, nazivRacuna);
 		else if (provjeraFormata(provjera) == 2)
-			format2(file);
+			format2(file, nazivRacuna);
 		else
 			std::cout << "Nepoznat format!" << std::endl;
 	}
@@ -30,12 +30,13 @@ void UcitajRacun::upisiValidne()
 	upisiRacun(validniRacuni);
 }
 
-void UcitajRacun::format1(std::ifstream& file)
+void UcitajRacun::format1(std::ifstream& file, std::string nazivRacuna)
 {
 	bool provjera;
 	if (file.is_open())
 	{
 		Racun racun(currency);
+		racun.setNazivRacuna(nazivRacuna);
 		std::vector<std::string> racuni;
 		while (!file.eof())
 		{
@@ -75,12 +76,13 @@ void UcitajRacun::format1(std::ifstream& file)
 		std::cout << "Racun nije otvoren";
 }
 
-void UcitajRacun::format2(std::ifstream& file)
+void UcitajRacun::format2(std::ifstream& file, std::string nazivRacuna)
 {
 	bool provjera;
 	if (file.is_open())
 	{
 		Racun racun(currency);
+		racun.setNazivRacuna(nazivRacuna);
 		std::vector<std::string> racuni;
 		std::string temp;
 		getline(file, temp);
