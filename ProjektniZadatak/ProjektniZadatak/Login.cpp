@@ -240,7 +240,7 @@ void login::readUsers()
 		};
 		file.close();
 	}
-	else std::cout << "Datoteka nije otvorena" << endl;
+	else std::cout << "Datoteka nije otvorena!" << endl;
 }
 
 int login::deleteUser()
@@ -263,7 +263,7 @@ int login::deleteUser()
 		}
 	}
 	if (i == 0) {
-		std::cout << "Nalog koji pokusavate obrisati ne postoji" << endl;
+		std::cout << "Nalog koji pokusavate obrisati ne postoji!" << endl;
 		return i;
 	}
 	else {
@@ -306,10 +306,10 @@ int login::deleteUser()
 			file2.close();
 			remove("users.txt");
 			rename("temp.txt", "users.txt");
-			std::cout << "nalog uspjesno uklonjen" << endl;
+			std::cout << "nalog uspjesno uklonjen!" << endl;
 			return i;
 		}
-		else std::cout << "Datoteka nije otvorena" << endl;
+		else std::cout << "Datoteka nije otvorena!" << endl;
 		return 0;
 	}
 }
@@ -331,9 +331,9 @@ void login::changeCurr()
 	{
 		file << temp;
 		file.close();
-		std::cout << "Valuta uspjesno promijenjena" << endl;
+		std::cout << "Valuta uspjesno promijenjena!" << endl;
 	}
-	else std::cout << "Datoteka nije otvorena" << endl;
+	else std::cout << "Datoteka nije otvorena!" << endl;
 	return;
 }
 
