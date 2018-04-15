@@ -19,6 +19,7 @@ public:
 	void ucitajRacun(std::ifstream&, std::string); // prihvata fajl sa valutom sistema i naziv racuna kao argumente
 	void upisiValidne(); // upisivanje obradjenih i validnih racuna u fajl validniRacuni
 	void pregledPodatakaZaProizvod(std::string); // funkcija prihvata naziv zeljenog proizvoda kao argument
+	void pregledUkupneProdajeZaOdredjeniMjesec(int, int); // funkcija kao argumente prihvata mjesec i godinu
 	~UcitajRacun();
 };
 

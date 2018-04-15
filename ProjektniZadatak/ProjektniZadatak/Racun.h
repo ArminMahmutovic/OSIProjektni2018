@@ -51,5 +51,6 @@ public:
 	bool operator==(const Racun&)const; // provjeravamo da li su 2 racuna jednaka
 	void upisiRacun(std::vector<Racun>); // upis validnih racuna u fajl, funkcija kao argument prihvata niz validnih racuna
 	int ispisiPodatkeZaProizvod(Racun&, std::string); // funkcija prihvata racun na kom se nalazi zeljeni proizvod i naziv proizvoda
+	void pregledUkupneProdajeZaMjesec(int, int, std::vector<Racun>&); // funkcija prihvata kao argumente mjesec, godinu i validne racune
 	~Racun();
 };

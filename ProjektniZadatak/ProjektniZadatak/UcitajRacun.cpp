@@ -192,6 +192,14 @@ void UcitajRacun::pregledPodatakaZaProizvod(std::string nazivProizvoda)
 		std::cout << std::endl << "Nema podataka za ovaj proizvod" << std::endl << std::endl;
 }
 
+void UcitajRacun::pregledUkupneProdajeZaOdredjeniMjesec(int mjesec, int godina)
+{
+
+	std::cout << std::endl << "Ukupna prodaja za " << mjesec << ". mjesec" << std::endl;
+	std::cout << std::endl;
+	pregledUkupneProdajeZaMjesec(mjesec, godina, validniRacuni);
+	std::cout << std::endl;
+}
 
 UcitajRacun::~UcitajRacun()
 {}

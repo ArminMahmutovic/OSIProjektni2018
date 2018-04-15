@@ -19,7 +19,6 @@ void Racun::setImeKupca(std::string imeKupca)
 
 void Racun::upisiGresku(std::string poruka)
 {
-	std::cout << this->nazivRacuna << std::endl;
 	std::ofstream errorFile(this->nazivRacuna);
 	if (errorFile.is_open())
 	{
@@ -238,6 +237,54 @@ void Racun::setNazivRacuna(std::string nazivRacuna)
 {
 	nazivRacuna.erase(nazivRacuna.end() - 4, nazivRacuna.end()); // obrisemo .txt iz naziva racuna
 	this->nazivRacuna = nazivRacuna + "_error.txt";
+}
+
+void Racun::pregledUkupneProdajeZaMjesec(int mjesec, int godina, std::vector<Racun>& racuni)
+{
+	std::vector<Proizvod> pomocna; // pomocni niz proizvoda
+	double suma = 0; // ukupna cijena prodaje za mjesec bez PDV-a
+	for (auto& racun : racuni) // prolazimo kroz niz racuna
+	{
+		if (racun.datumKupovine.mjesec == mjesec && racun.datumKupovine.godina == godina)
+		{
+			suma += racun.ukupno; // na sumu dodamo ukupnu cijenu svih proizvoda na racunu bez PDV-a
+			for (auto& x : racun.proizvodi) // prolazimo kroz niz proizvoda sa racuna
+			{
+				if (pomocna.size() > 0) // ako niz "pomocna" nije prazan
+				{
+					int brojac = 0; // provjera da li smo na vise razlicitih racuna pronasli isti proizvod
+					for (auto& y : pomocna) // prolazimo kroz niz proizvoda koje smo vec dodali u niz "pomocna"
+					{
+						if (y.naziv == x.naziv && y.sifra == x.sifra) // ako se proizvod vec nalazi u nizu
+						{											 // povecamo kolicinu, cijenu i ukupno
+							y.kolicina += x.kolicina;				// za taj proizvod
+							y.cijena += x.cijena;
+							y.ukupno += x.ukupno;
+							brojac++; // uvecamo brojac
+						}
+					}
+					if (brojac == 0) // ako se proizvod ne nalazi u nizu dodamo ga u niz
+						pomocna.push_back(x);
+				}
+				else
+					pomocna.push_back(x);
+			}
+		}
+	}
+	if (pomocna.size() > 0) // ako niz pomocna nije prazan ispisemo podatke ukupne prodaje za mjesec
+	{
+		std::cout << "Naziv" << std::setw(10) << "kolicina" << std::setw(10) << "cijena" << std::setw(10) << "ukupno" << std::endl;
+		for (auto& proizvodi : pomocna)
+			std::cout << proizvodi.naziv << std::setw(10) << proizvodi.kolicina << std::setw(10) << proizvodi.cijena << std::setw(10) << proizvodi.ukupno << std::endl;
+		std::cout << std::endl;
+		std::cout << "Ukupno: " << suma << " " << valuta << std::endl;
+		std::cout << "PDV: " << suma * PDV << " " << valuta << std::endl;
+		std::cout << "Ukupno za placanje: " << suma * PDV + suma << " " << valuta << std::endl;
+		std::cout << std::endl;
+	}
+	else // ako je niz prazan ispisemo odgovarajucu poruku
+		std::cout << std::endl << "Nema podataka za ovaj mjesec!" << std::endl << std::endl;
+
 }
 
 Racun::~Racun()
