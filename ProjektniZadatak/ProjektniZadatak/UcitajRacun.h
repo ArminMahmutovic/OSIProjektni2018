@@ -20,6 +20,7 @@ public:
 	void upisiValidne(); // upisivanje obradjenih i validnih racuna u fajl validniRacuni
 	void pregledPodatakaZaProizvod(std::string); // funkcija prihvata naziv zeljenog proizvoda kao argument
 	void pregledUkupneProdajeZaOdredjeniMjesec(int, int); // funkcija kao argumente prihvata mjesec i godinu
+	void pregledPodatakaZaKupca(std::string); // funkcija prihvata ime kupca
 	~UcitajRacun();
 };
 

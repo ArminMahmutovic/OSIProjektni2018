@@ -287,5 +287,22 @@ void Racun::pregledUkupneProdajeZaMjesec(int mjesec, int godina, std::vector<Rac
 
 }
 
+void Racun::ispisiRacunZaKupca(Racun& racun)
+{
+	std::cout << "Datum kupovine: " << racun.datumKupovine.dan << "/" << racun.datumKupovine.mjesec << "/" << racun.datumKupovine.godina << std::endl;
+	std::cout << "Proizvod" << std::setw(7) << "sifra" << std::setw(10) << "kolicina" << std::setw(10) << "cijena" << std::setw(10) << "ukupno" << std::endl;
+	for (auto& x : racun.proizvodi)
+		std::cout << x.naziv << std::setw(10) << x.sifra << std::setw(10) << x.kolicina << std::setw(10) << x.cijena << std::setw(10) << x.ukupno << std::endl;
+	std::cout << std::endl << "Ukupno: " << racun.ukupno << " " << valuta << std::endl;
+	std::cout << "PDV: " << racun.PDVvrijednost << " " << valuta << std::endl;
+	std::cout << "Ukupno za placanje: " << racun.ukupnoZaPlacanje << " " << valuta << std::endl;
+	std::cout << std::endl;
+}
+
+std::string Racun::getImeKupca()
+{
+	return imeKupca;
+}
+
 Racun::~Racun()
 {}
