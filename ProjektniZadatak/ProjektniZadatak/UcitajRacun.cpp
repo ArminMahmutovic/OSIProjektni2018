@@ -157,6 +157,7 @@ void UcitajRacun::ucitajIzFajla()
 				racuni.push_back(pomocna);
 		}
 		file.close();
+		if (racuni.size() == 1) return;
 		int j = 2;
 		for (int i = 0; i < stoi(racuni[0]); i++)
 		{
