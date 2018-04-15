@@ -115,11 +115,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Login.h" />
     <ClInclude Include="Racun.h" />
     <ClInclude Include="UcitajRacun.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Login.cpp" />
     <ClCompile Include="Racun.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="UcitajRacun.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
