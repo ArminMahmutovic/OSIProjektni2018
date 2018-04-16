@@ -4,40 +4,39 @@
 
 int login::menu(int option)
 {
-	std::ofstream errorFile("ErrorFile.txt");
 	std::ifstream currency("currency.txt");
 	if (option == 0)
 		return 0;
 	if (option == 2)
 	{
-		int i;
+		char i;
 		std::cout << "Unesite broj sa opcijom koju zelite koristiti:" << endl;
 		std::cout << "1.Napravi novi racun" << endl << "2.Obrisi postojeci racun" << endl << "3.Promjeni valutu sistema" << endl << "4.Izloguj se" << endl;
 		do {
 			std::cin >> i;
-			if (i != 1 && i != 2 && i != 3 && i != 4)
+			if (i != '1' && i != '2' && i != '3' && i != '4')
 				std::cout << "Nevazeca opcija, molimo vas da unesete 1, 2, 3 or 4:" << endl;
-		} while (i != 1 && i != 2 && i != 3 && i != 4);
-		if (i == 1)
+		} while (i != '1' && i != '2' && i != '3' && i != '4');
+		if (i == '1')
 		{
 			this->addUser();
 			menu(option);
 			return 0;
 		}
 
-		if (i == 2)
+		if (i == '2')
 		{
 			this->deleteUser();
 			menu(option);
 			return 0;
 		}
-		if (i == 3)
+		if (i == '3')
 		{
 			this->changeCurr();
 			menu(option);
 			return 0;
 		}
-		if (i == 4) {
+		if (i == '4') {
 			std::cout << "Uspjesno ste se izlogovali!" << endl;
 			menu(this->welcome());
 			return 0;
@@ -47,7 +46,7 @@ int login::menu(int option)
 	{
 		
 		UcitajRacun racun(currency);
-		path p = "C:\\Users\\User\\Desktop\\Racuni";
+		path p = "C:\\Users\\armin\\Desktop\\Racuni";
 		for (auto& f : directory_iterator(p))
 		{
 			std::ifstream file(f);
@@ -55,15 +54,15 @@ int login::menu(int option)
 			racun.ucitajRacun(file, nazivRacuna);
 		}
 		racun.upisiValidne();
-		int i;
+		char i;
 		std::cout << "Unesite broj sa opcijom koju zelite koristiti:" << endl;
 		std::cout << "1.Pregled podataka za odredjenog kupca" << endl << "2.Pregled podataka za odredjeni mjesec" << endl << "3.Pregled podataka za odredjeni proizvod" << endl << "4.Izloguj se" << endl;
 		do {
 		std::cin >> i;
-		if (i != 1 && i != 2 && i != 3 && i != 4)
+		if (i != '1' && i != '2' && i != '3' && i != '4')
 		std::cout << "Nevazeca opcija, molimo vas da unesete 1, 2, 3 or 4:" << endl;
-		} while (i != 1 && i != 2 && i != 3 && i != 4);
-		if (i == 1)
+		} while (i != '1' && i != '2' && i != '3' && i != '4');
+		if (i == '1')
 		{
 		std::string imeKupca;
 		std::cout << "Unesite ime kupca: ";
@@ -74,7 +73,7 @@ int login::menu(int option)
 		return 0;
 		}
 
-		if (i == 2)
+		if (i == '2')
 		{
 		int mjesec, godina;
 		std::cout << "Unesite mjesec i godinu" << std::endl;
@@ -87,7 +86,7 @@ int login::menu(int option)
 		menu(option);
 		return 0;
 		}
-		if (i == 3)
+		if (i == '3')
 		{
 		std::string nazivProizvoda;
 		std::cout << "Unesite naziv proizvoda: ";
@@ -96,7 +95,7 @@ int login::menu(int option)
 		racun.pregledPodatakaZaProizvod(nazivProizvoda);
 		return 0;
 		}
-		if (i == 4) {
+		if (i == '4') {
 		std::cout << "Uspjesno ste se izlogovali!" << endl;
 		menu(this->welcome());
 		return 0;
@@ -161,12 +160,12 @@ void login::addUser()
 	std::ofstream file("users.txt", std::ios::app);
 	if (file.is_open())
 	{
-		file << endl << temp.name << endl;
+		file << temp.name << endl;
 		file << temp.lastname << endl;
 		file << temp.pin << endl;
 		if (temp.admin == true)
-			file << "admin";
-		else file << "analyst";
+			file << "admin" << endl;
+		else file << "analyst" << endl;
 		file.close();
 		std::cout << "Nalog uspjesno kreiran!" << endl;
 		return;
@@ -236,7 +235,8 @@ void login::readUsers()
 			if (temp == "admin")
 				temp1.admin = true;
 			else temp1.admin = false;
-			users.push_back(temp1);
+			if(temp1.name != "")
+				users.push_back(temp1);
 		};
 		file.close();
 	}
@@ -253,59 +253,35 @@ int login::deleteUser()
 	temp.pin = "0000";
 	temp.admin = false;
 	int i = 0;
-	std::list<user>::iterator findIter;
-	for (findIter = users.begin(); !(findIter == users.end()); ++findIter) {
-		if (temp == *findIter)
-		{
-			users.erase(findIter);
-			i = 1;
-			break;
-		}
+	std::list<user> temp1;
+	for (auto& x : users)
+	{
+		if (x != temp)
+			temp1.push_back(x);
 	}
+	if (users.size() != temp1.size())
+		i = 1;
 	if (i == 0) {
 		std::cout << "Nalog koji pokusavate obrisati ne postoji!" << endl;
 		return i;
 	}
-	else {
-		int brojac = 0;
-		std::ifstream file1;
+	else 
+	{
+		users = temp1;
+		remove("users.txt");
+		std::ofstream file1;
 		file1.open("users.txt");
-		std::ofstream file2;
-		file2.open("temp.txt");
-		std::string str1, str2;
 		if (file1.is_open())
 		{
-			while (brojac < (4 * users.size() + 4)) {
-				getline(file1, str1); brojac++;
-				if (str1 == temp.name) {
-					getline(file1, str2); brojac++;
-					if (str2 == temp.lastname) {
-						getline(file1, str2);
-						getline(file1, str2);
-						brojac += 2;
-						continue;
-					}
-					else {
-						if (brojac == (4 * users.size() + 4))
-						{
-							file2 << str1 << endl << str2;
-							break;
-						}
-						file2 << str1 << endl << str2 << endl;
-						continue;
-					}
-				}
-				if (brojac == (4 * users.size() + 4))
-				{
-					file2 << str1;
-					break;
-				}
-				file2 << str1 << endl;
+			for (auto& x : users)
+			{
+				file1 << x.name << endl << x.lastname << endl << x.pin << endl;
+				if (x.admin == true)
+					file1 << "admin" << endl;
+				else
+					file1 << "analyst" << endl;
 			}
 			file1.close();
-			file2.close();
-			remove("users.txt");
-			rename("temp.txt", "users.txt");
 			std::cout << "nalog uspjesno uklonjen!" << endl;
 			return i;
 		}
@@ -359,6 +335,20 @@ user & user::operator=(user &ref)
 	lastname = ref.lastname;
 	pin = ref.pin;
 	return *this;
+}
+
+bool user::operator!=(const user & b) const
+{
+	if (b.name != this->name && b.lastname != this->lastname)
+		return true;
+	return false;
+}
+
+bool user::operator!=(user & b)
+{
+	if (b.name != this->name && b.lastname != this->lastname)
+		return true;
+	return false;
 }
 
 int isPin(std::string pin) {

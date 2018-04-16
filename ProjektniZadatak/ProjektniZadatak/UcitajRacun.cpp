@@ -203,5 +203,23 @@ void UcitajRacun::pregledUkupneProdajeZaOdredjeniMjesec(int mjesec, int godina)
 	std::cout << std::endl;
 }
 
+void UcitajRacun::pregledPodatakaZaKupca(std::string imeKupca)
+{
+	int brojac = 0;
+	std::cout << std::endl << "Ime kupca: " << imeKupca << std::endl;
+	std::cout << std::endl;
+	for (auto& racun : validniRacuni)
+	{
+		if (racun.getImeKupca() == imeKupca)
+		{
+			ispisiRacunZaKupca(racun);
+			brojac++;
+		}
+	}
+	std::cout << std::endl;
+	if (brojac == 0)
+		std::cout << std::endl << "Nema podataka za ovog kupca!" << std::endl;
+}
+
 UcitajRacun::~UcitajRacun()
 {}

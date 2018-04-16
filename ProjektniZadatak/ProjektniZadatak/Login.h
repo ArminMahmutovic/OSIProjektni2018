@@ -20,6 +20,8 @@ struct user
 	bool operator==(const user& b) const;
 	bool operator==(user& b);
 	user& operator=(user&);
+	bool operator!=(const user& b) const;
+	bool operator!=(user& b);
 };
 struct login
 {
